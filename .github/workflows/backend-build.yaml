@@ -80,7 +80,7 @@ jobs:
         run: |
          sed -i 's@CONTAINER_IMAGE@'"${{ vars.ECR_REGISTRY }}/flask-app:${{ github.sha }}"'@' k8s/backend/deployment.yaml
          kubectl apply -f k8s/backend/configmap.yaml
-         kubectl apply -f k8s/backend/service-account.yml
+         kubectl apply -f k8s/backend/service-account.yaml
          kubectl apply -f k8s/backend/deployment.yaml
          kubectl apply -f k8s/backend/service.yaml
          kubectl apply -f k8s/backend/ingress.yaml
