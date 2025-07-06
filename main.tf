@@ -6,3 +6,4 @@ module "vpc" {
   availability_zone = var.availability_zone
   private_subnet = var.private_subnet
 }
+
