@@ -13,7 +13,7 @@ module "rds" {
   private_subnets      = module.vpc.private_subnet
   db_username          = var.db_username
   database_name        = var.database_name
-  rds_security_group_ids  = module.vpc.rds_security_group_aurora_id
+  rds_security_group_ids  = [module.vpc.rds_security_group_aurora_id]
 
   depends_on = [
     module.vpc
