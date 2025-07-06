@@ -72,18 +72,18 @@ resource "helm_release" "loadbalancer_controller" {
 
 
 # Create Namespace for grafana and prometheus
-resource "kubernetes_namespace" "monitoring" {
-  metadata {
-    name = "monitoring"
-  }
-}
+#resource "kubernetes_namespace" "monitoring" {
+#  metadata {
+#    name = "monitoring"
+#  }
+#}
 
 # Resource: Kubernetes Namespace fargate_namespace
-resource "kubernetes_namespace" "fargate_namespace" {
-  metadata {
-    name = "frontend"
-  }
-}
+#resource "kubernetes_namespace" "fargate_namespace" {
+#  metadata {
+#    name = "frontend"
+#  }
+#}
 
 # Helm to install and setup prometheus and grafana 
 resource "helm_release" "prometheus_grafana_stack" {
@@ -91,7 +91,8 @@ resource "helm_release" "prometheus_grafana_stack" {
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "kube-prometheus-stack"
   version    = "58.0.0"
-  namespace  = kubernetes_namespace.monitoring.metadata[0].name
+  #namespace  = kubernetes_namespace.monitoring.metadata[0].name
+  namespace  = var.kubernetes_namespace_monitoring
   timeout    = 600
   
   # Retry mechanism
@@ -142,6 +143,6 @@ resource "helm_release" "prometheus_grafana_stack" {
 
   depends_on = [
     helm_release.loadbalancer_controller,
-    kubernetes_namespace.monitoring
+    # kubernetes_namespace.monitoring
   ]
 }

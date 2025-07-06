@@ -9,3 +9,7 @@ output "aws_iam_openid_connect_provider_extract_from_arn" {
   description = "AWS IAM Open ID Connect Provider extract from ARN"
    value = local.aws_iam_oidc_connect_provider_extract_from_arn
 }
+
+output "cluster_oidc_issuer_url" {
+  value = aws_eks_cluster.eks.identity[0].oidc[0].issuer
+}
