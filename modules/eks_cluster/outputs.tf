@@ -40,13 +40,6 @@ output "cluster_version" {
   value       = aws_eks_cluster.eks.version
 }
 
-
-
-output "cluster_oidc_issuer_url" {
-  description = "The URL on the EKS cluster OIDC Issuer"
-  value       = aws_eks_cluster.eks.identity[0].oidc[0].issuer
-}
-
 output "cluster_primary_security_group_id" {
   description = "The cluster primary security group ID created by the EKS cluster. Referred to as 'Cluster security group' in the EKS console."
   value       = aws_eks_cluster.eks.vpc_config[0].cluster_security_group_id
