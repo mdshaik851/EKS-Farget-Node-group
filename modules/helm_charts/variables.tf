@@ -12,5 +12,5 @@ variable "vpc_id" {
 }
 variable "aws_region" {
 }
-variable "kubernetes_namespace_monitoring"
-{}
+variable "kubernetes_namespace_monitoring"{
+}

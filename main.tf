@@ -44,8 +44,7 @@ module "helm" {
   aws_region         = var.region
 }
 
-module "namespace"
-{
+module "namespace" {
   source = "./modules/namespaces"
 }
 
