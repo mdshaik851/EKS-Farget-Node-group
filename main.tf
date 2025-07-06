@@ -20,3 +20,15 @@ module "rds" {
   ]
 }
 
+module "iam" {
+  source = "./modules/iam"
+  name = var.name
+  aws_iam_openid_connect_provider_arn = module.eks.aws_iam_openid_connect_provider_arn
+  aws_iam_openid_connect_provider_extract_from_arn = module.eks.aws_iam_openid_connect_provider_extract_from_arn
+
+  depends_on = [
+    module.vpc
+  ]
+
+}
+
