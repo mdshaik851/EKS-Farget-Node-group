@@ -69,7 +69,7 @@ jobs:
 
       - name: Update kubeconfig
         run: |
-          aws eks update-kubeconfig --region us-east-1 --name demo6-eks
+          aws eks update-kubeconfig --region ap-northeast-3 --name demo6-eks
 
       - name: Verify Cluster Access
         run: |
