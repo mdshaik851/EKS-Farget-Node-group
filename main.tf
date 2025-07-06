@@ -8,7 +8,7 @@ module "vpc" {
 }
 
 module "rds" {
-  source               = "./modules/rds"
+  source               = "./modules/aurora-rds"
   name                 = var.name
   private_subnets      = module.vpc.private_subnets
   db_username          = var.db_username
