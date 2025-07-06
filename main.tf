@@ -24,8 +24,8 @@ module "rds" {
 module "iam" {
   source = "./modules/iam"
   name = var.name
-  # aws_iam_openid_connect_provider_arn = module.eks.aws_iam_openid_connect_provider_arn
-  # aws_iam_openid_connect_provider_extract_from_arn = module.eks.aws_iam_openid_connect_provider_extract_from_arn
+  aws_iam_openid_connect_provider_arn = module.eks.aws_iam_openid_connect_provider_arn
+  aws_iam_openid_connect_provider_extract_from_arn = module.eks.aws_iam_openid_connect_provider_extract_from_arn
 
   depends_on = [
     module.vpc
@@ -69,16 +69,6 @@ module "eks" {
     module.namespace
   ]
 }
-
-# Update IAM module with OIDC provider info after EKS creation
-resource "aws_iam_openid_connect_provider" "oidc_provider" {
-  url             = module.eks.cluster_oidc_issuer_url
-  client_id_list  = ["sts.amazonaws.com"]
-  thumbprint_list = [var.eks_oidc_root_ca_thumbprint]
-
-  depends_on = [module.eks]
-}
-
 
 module "ecr" {
   source = "./modules/ecr"
