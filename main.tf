@@ -42,7 +42,6 @@ module "helm" {
   lbc_iam_role_arn   = module.iam.lbc_iam_role_arn
   vpc_id             = module.vpc.vpc_id
   aws_region         = var.region
-  kubernetes_namespace_monitoring = module.namespace.namespace
 
 }
 
@@ -60,8 +59,8 @@ module "eks" {
   fargate_profile_role_arn = module.iam.fargate_profile_role_arn
   eks_oidc_root_ca_thumbprint = var.eks_oidc_root_ca_thumbprint
   cluster_role_dependency = module.iam.eks_role_depends_on
-  namespace_depends_on   = module.namespace.namespace_depends_on
-  namespace           = module.namespace.namespace
+  namespace_depends_on   = module.helm.namespace_depends_on
+  namespace           = module.helm.namespace
   security_group_ids  = [module.vpc.eks_security_group_id]
 
   depends_on = [
