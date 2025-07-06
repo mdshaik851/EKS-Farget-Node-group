@@ -2,7 +2,7 @@ name: Build and Push to ECR backend
 on:
   push:
     paths:
-      - 'backend1/**'
+      - 'backend/**'
       - 'k8s/backend/**'
   workflow_dispatch:
 
@@ -81,9 +81,9 @@ jobs:
          sed -i 's@CONTAINER_IMAGE@'"${{ vars.ECR_REGISTRY }}/flask-app:${{ github.sha }}"'@' k8s/backend/deployment.yaml
          kubectl apply -f k8s/backend/configmap.yaml
          kubectl apply -f k8s/backend/service-account.yaml
-         kubectl apply -f k8s/backend/deployment.yaml
-         kubectl apply -f k8s/backend/service.yaml
-         kubectl apply -f k8s/backend/ingress.yaml
+         kubectl delete -f k8s/backend/deployment.yaml
+         kubectl delete -f k8s/backend/service.yaml
+         kubectl delete -f k8s/backend/ingress.yaml
 
 
 
