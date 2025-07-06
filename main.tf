@@ -33,7 +33,7 @@ module "iam" {
 }
 
 module "helm" {
-  source = "./modules/helm"
+  source = "./modules/helm_charts"
   cluster_id = module.eks.cluster_id
   cluster_endpoint = module.eks.cluster_endpoint
   cluster_certificate_authority_data = module.eks.cluster_certificate_authority_data
