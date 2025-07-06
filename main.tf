@@ -23,8 +23,8 @@ module "rds" {
 module "iam" {
   source = "./modules/iam"
   name = var.name
-  aws_iam_openid_connect_provider_arn = module.eks_cluster.aws_iam_openid_connect_provider_arn
-  aws_iam_openid_connect_provider_extract_from_arn = module.eks_cluster.aws_iam_openid_connect_provider_extract_from_arn
+  aws_iam_openid_connect_provider_arn = module.eks.aws_iam_openid_connect_provider_arn
+  aws_iam_openid_connect_provider_extract_from_arn = module.eks.aws_iam_openid_connect_provider_extract_from_arn
 
   depends_on = [
     module.vpc
@@ -48,15 +48,15 @@ module "helm" {
 module "eks" {
   source = "./modules/eks_cluster"
   name                = var.name
-  public_subnets      = module.vpc.public_subnets
-  private_subnets     = module.vpc.private_subnets
+  public_subnets      = module.vpc.public_subnet
+  private_subnets     = module.vpc.private_subnet
   cluster_role_arn    = module.iam.eks_cluster_role_arn
   node_role_arn       = module.iam.eks_node_role_arn
   fargate_profile_role_arn = module.iam.fargate_profile_role_arn
   eks_oidc_root_ca_thumbprint = var.eks_oidc_root_ca_thumbprint
   cluster_role_dependency = module.iam.eks_role_depends_on
-  namespace_depends_on   = module.helm_charts.namespace_depends_on
-  namespace           = module.helm_charts.namespace
+  namespace_depends_on   = module.helm.namespace_depends_on
+  namespace           = module.helm.namespace
   security_group_ids  = [module.vpc.eks_security_group_id]
 
   depends_on = [
