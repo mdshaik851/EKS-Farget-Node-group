@@ -23,8 +23,33 @@ variable "private_subnet" {
     default     = ["10.0.3.0/24", "10.0.4.0/24"]
 }
 
+
 variable "availability_zone" {
     description = "Availability Zones"
     type = list(string)
     default     = ["ap-northeast-3a", "ap-northeast-3b"]
+}
+
+variable "name" {
+  description = "Name to be used on VPC created"
+  type        = string
+  default     = "demo6" 
+}
+
+variable "db_username" {
+  description = "Name of the db_username"
+  type        = string
+  default     = "admin"
+}
+
+variable "database_name" {
+  description = "Name of the db_name"
+  type        = string
+  default     = "test"
+}
+
+variable "eks_oidc_root_ca_thumbprint" {
+  type        = string
+  description = "Thumbprint of Root CA for EKS OIDC, Valid until 2037"
+  default     = "9e99a48a9960b14926bb7f3b02e22da2b0ab7280"
 }
