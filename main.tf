@@ -16,7 +16,8 @@ module "rds" {
   rds_security_group_ids  = [module.vpc.rds_security_group_aurora_id]
 
   depends_on = [
-    module.vpc
+    module.vpc,
+    module.eks
   ]
 }
 
