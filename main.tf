@@ -1,5 +1,5 @@
 module "vpc" {
-  source = "./modules/vpc"
+  source = "./modules/networking"
   region = var.region
   vpc_cidr = var.vpc_cidr
   public_subnet = var.public_subnet
