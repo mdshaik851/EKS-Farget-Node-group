@@ -4,25 +4,25 @@ provider "aws" {
 }
  
 # VPC and Networking
-resource "aws_vpc" "demo-vpc-uc9" {
+resource "aws_vpc" "demo-vpc-uc19" {
 cidr_block = var.vpc_cidr
   tags = {
-    Name = "demo-vpc-uc9"
+    Name = "demo-vpc-uc19"
   }
 }
 
 #Creation Internet Gateway
 resource "aws_internet_gateway" "igw" {
-vpc_id = aws_vpc.demo-vpc-uc9.id
+vpc_id = aws_vpc.demo-vpc-uc19.id
   tags = {
-    Name = "demo-vpc-uc9-igw"
+    Name = "demo-vpc-uc19-igw"
   }
 }
 
 #Create EIP
 resource "aws_eip" "eip" {
   tags = {
-    Name = "demo-vpc-uc9-eip"
+    Name = "demo-vpc-uc19-eip"
   }
 }
 
@@ -39,7 +39,7 @@ resource "aws_nat_gateway" "demo-natgw" {
 #Creation Public Subnet
 resource "aws_subnet" "public_subnet" {
   count             = 2
-  vpc_id = aws_vpc.demo-vpc-uc9.id
+  vpc_id = aws_vpc.demo-vpc-uc19.id
   cidr_block        = element(var.public_subnet, count.index)
   availability_zone = element(var.availability_zone, count.index)
   tags = {
@@ -50,7 +50,7 @@ resource "aws_subnet" "public_subnet" {
 #Creation Private Subnet
 resource "aws_subnet" "private_subnet" {
   count             = 2
-  vpc_id = aws_vpc.demo-vpc-uc9.id
+  vpc_id = aws_vpc.demo-vpc-uc19.id
   cidr_block        = element(var.private_subnet, count.index)
   availability_zone = element(var.availability_zone, count.index)
   tags = {
@@ -60,7 +60,7 @@ resource "aws_subnet" "private_subnet" {
 
 #Assigning Internet to Internet Gateway in Routes
 resource "aws_route_table" "public_routes" {
-vpc_id = aws_vpc.demo-vpc-uc9.id
+vpc_id = aws_vpc.demo-vpc-uc19.id
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw.id
@@ -69,7 +69,7 @@ vpc_id = aws_vpc.demo-vpc-uc9.id
 
 #Assigning Internet to Nat Gateway in Routes
 resource "aws_route_table" "private_routes" {
-vpc_id = aws_vpc.demo-vpc-uc9.id
+vpc_id = aws_vpc.demo-vpc-uc19.id
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.demo-natgw.id
@@ -91,9 +91,9 @@ resource "aws_route_table_association" "private" {
 }
 
 #Creating Security Group for EKS Cluster
-resource "aws_security_group" "eks_cluster" {
+resource "aws_security_group" "eks_clustersecurity_group" {
   name   = "eks_cluster"
-  vpc_id = aws_vpc.demo-vpc-uc9.id
+  vpc_id = aws_vpc.demo-vpc-uc19.id
  
   ingress {
     from_port   = 0
@@ -102,6 +102,26 @@ resource "aws_security_group" "eks_cluster" {
     cidr_blocks = ["0.0.0.0/0"]
   }
  
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "rds_security_group" {
+  name        = "rds-sg"
+  description = "Allow MySQL from Web SG"
+  vpc_id      = aws_vpc.demo-vpc-uc19.id
+
+  ingress {
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
