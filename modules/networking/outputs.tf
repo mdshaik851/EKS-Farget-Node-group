@@ -7,10 +7,10 @@ output "rds_security_group_aurora_id" {
 }
 
 output "public_subnet" {
-  value = aws_subnet.public[*].id
+  value = aws_subnet.public_subnet[*].id
 }
 
 output "private_subnet" {
-  value = aws_subnet.private[*].id
+  value = aws_subnet.private_subnet[*].id
 }
 
