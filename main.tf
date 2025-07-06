@@ -42,6 +42,10 @@ module "helm" {
   lbc_iam_role_arn   = module.iam.lbc_iam_role_arn
   vpc_id             = module.vpc.vpc_id
   aws_region         = var.region
+  kubernetes_namespace_monitoring = module.namespace.namespace
+  depends_on = [
+    module.namespace
+  ]
 }
 
 module "namespace" {
