@@ -45,10 +45,6 @@ module "helm" {
 
 }
 
-module "namespace" {
-  source = "./modules/namespaces"
-}
-
 module "eks" {
   source = "./modules/eks_cluster"
   name                = var.name
@@ -64,8 +60,7 @@ module "eks" {
   security_group_ids  = [module.vpc.eks_security_group_id]
 
   depends_on = [
-    module.vpc,
-    module.namespace
+    module.vpc
   ]
 }
 
