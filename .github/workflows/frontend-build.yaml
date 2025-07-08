@@ -45,11 +45,6 @@ jobs:
     needs: build-push-APi-react  # Optional: Run sequentially after job1
     runs-on: ubuntu-latest
 
-    env:
-      CLUSTER_NAME: test-eks
-      AWS_REGION: us-east-1
-      NAMESPACE: default
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3

@@ -45,10 +45,6 @@ jobs:
     needs: build-push-APi-flask  # Optional: Run sequentially after job1
     runs-on: ubuntu-latest
 
-    env:
-      CLUSTER_NAME: test-eks
-      AWS_REGION: ap-northeast-3
-      NAMESPACE: default
 
     steps:
       - name: Checkout Code
